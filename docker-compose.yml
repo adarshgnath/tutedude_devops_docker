@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile-backend
+    hostname: backend-host
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./backend:/app
+    networks:
+      - tutedude-network
+      
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile-frontend
+    ports:
+      - "6500:3500"
+    volumes:
+      - ./frontend:/app
+    environment:
+      - BACKEND_URL=http://backend-host:9000
+    depends_on:
+      - backend
+    networks:
+      - tutedude-network
+
+networks:
+  tutedude-network: {}

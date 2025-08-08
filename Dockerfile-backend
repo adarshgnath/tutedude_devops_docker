@@ -1,0 +1,13 @@
+FROM python:3.10-alpine
+
+WORKDIR /app
+
+ADD backend/requirement.txt .
+
+RUN pip install -r requirement.txt
+
+ADD backend/ .
+
+ENTRYPOINT ["python"]
+
+CMD ["app.py"]
